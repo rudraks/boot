@@ -325,5 +325,3 @@ class Header {
 		return $filemodules;
 	}
 }
-
-Header::init ();

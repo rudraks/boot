@@ -203,6 +203,7 @@ class Config {
 	}
 	public static function read($glob_config, $file, $file2 = null) {
 		$debug = isset ( $glob_config ["RX_MODE_DEBUG"] ) && ($glob_config ["RX_MODE_DEBUG"] == TRUE);
+		$debug_build = isset ( $_REQUEST["RX_MODE_BUILD"] ) && ($_REQUEST["RX_MODE_BUILD"] == TRUE);
 		
 		self::$cache = new RxCache ( "config", true );
 		
@@ -219,7 +220,7 @@ class Config {
 		
 		$RELOAD_VERSION = self::$cache->get ( "RELOAD_VERSION" );
 		
-		if ($debug || $reloadCache) {
+		if ($debug_build  || $debug || $reloadCache) {
 			
 			FileUtil::build_check ();
 			
@@ -245,6 +246,7 @@ class Config {
 			call_user_func ( rx_function ( "rx_reload_cache" ), $reloadMode );
 			
 			self::$cache->save ();
+			Browser::header("RX_MODE_BUILD");
 		} else {
 			define ( "FIRST_RELOAD", FALSE );
 		}

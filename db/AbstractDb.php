@@ -33,7 +33,7 @@ class AbstractDb
 			) );
 		} catch ( PDOException $e ) {
 			Console::exception($e);
-			//die ();
+			die ($e);
 		}
 	}
 	/**

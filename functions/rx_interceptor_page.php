@@ -1,4 +1,5 @@
 <?php
+
 include_once (RUDRA . "/smarty/Smarty.class.php");
 include_once (RUDRA . "/core/model/Header.php");
 include_once (RUDRA . "/core/model/Page.php");
