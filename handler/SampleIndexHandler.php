@@ -5,18 +5,21 @@
 * To change this template file, choose Tools | Templates
 * and open the template in the editor.
 */
+
 /**
  * @author lalittanwar
- * 
+ *
  * @Handler(index)
  */
-class SampleIndexHandler extends AbstractHandler {
+class SampleIndexHandler extends AbstractHandler
+{
 
-	public function invokeHandler(Smarty $viewModel,Header $header, DataModel $dataModel,
-			AbstractUser $user,$view="empty") {
-		$header->title(DEFAULT_TITLE);
-		$header->import(DEFAULT_BUNDLE);
-		return $view;
-	}
+    public function invokeHandler(Smarty $viewModel, Header $header,
+                                  AbstractUser $user, $view = "empty")
+    {
+        $header->title(DEFAULT_TITLE);
+        $header->import(DEFAULT_BUNDLE);
+        return $view;
+    }
 
 }

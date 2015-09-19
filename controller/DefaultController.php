@@ -6,10 +6,11 @@
 * and open the template in the editor.
 *
 */
+
 include_once(RUDRA."/boot/controller/AbstractController.php");
 
 
-class DefaultController extends AbstractController {
+class DefaultController extends \RudraX\Controller\AbstractController {
 
 	/**
 	 * @RequestMapping(url="template/{temp}",type=template)

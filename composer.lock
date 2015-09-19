@@ -1,0 +1,129 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "This file is @generated automatically"
+    ],
+    "hash": "a2120f7204a9e41ca05f17582effe626",
+    "packages": [
+        {
+            "name": "rudrax/annotations",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/rudraks/annotations.git",
+                "reference": "492790ea44d534881ba69f6a1386c341c3efadeb"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/rudraks/annotations/zipball/492790ea44d534881ba69f6a1386c341c3efadeb",
+                "reference": "492790ea44d534881ba69f6a1386c341c3efadeb",
+                "shasum": ""
+            },
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Erik Amaru Ortiz",
+                    "email": "aortiz.erik@gmail.com",
+                    "homepage": "https://github.com/eriknyk/phpalchemy"
+                }
+            ],
+            "description": "Script to scan all classes in Project;",
+            "keywords": [
+                "annotations",
+                "classes",
+                "controller"
+            ],
+            "time": "2015-06-26 16:38:31"
+        },
+        {
+            "name": "rudrax/phpfastcache",
+            "version": "2.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://gitlab.com/rudrax/phpfastcache.git",
+                "reference": "58c1f2681b3f727f8baf71c673f48d1edf33b30b"
+            },
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Modified Smarty for Rudrax",
+            "keywords": [
+                "api",
+                "controller",
+                "rudra",
+                "smarty"
+            ],
+            "time": "2014-07-23 15:09:34"
+        },
+        {
+            "name": "rudrax/smarty",
+            "version": "v3.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://gitlab.com/rudrax/smarty.git",
+                "reference": "22574a8ff7eaf699d4385f485238c62bb2367000"
+            },
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Modified Smarty for Rudrax",
+            "keywords": [
+                "api",
+                "controller",
+                "rudra",
+                "smarty"
+            ],
+            "time": "2014-07-24 07:21:32"
+        },
+        {
+            "name": "rudrax/utils",
+            "version": "0.0.6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/rudraks/utils.git",
+                "reference": "1b4dd7e6d23eceddd9fd9936be3f7ba061de95d3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/rudraks/utils/zipball/1b4dd7e6d23eceddd9fd9936be3f7ba061de95d3",
+                "reference": "1b4dd7e6d23eceddd9fd9936be3f7ba061de95d3",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "RudraX\\Utils\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Common PHP Utilities",
+            "keywords": [
+                "api",
+                "controller",
+                "rudra",
+                "smarty"
+            ],
+            "time": "2015-08-02 11:53:53"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "stable",
+    "stability-flags": [],
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": [],
+    "platform-dev": []
+}

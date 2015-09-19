@@ -95,7 +95,7 @@ class RudraX {
 				'DEFAULT_DB' => 'DB1',
 				'CONSOLE_FUN' => 'console.log',
 				'RX_MODE_DEBUG' => FALSE,
-				'PROJECT_ROOT_DIR' => "../" 
+				'PROJECT_ROOT_DIR' => "./"
 		), $_conf );
 		// Loads all the Constants
 		define ( 'PROJECT_ROOT_DIR', $global_config ['PROJECT_ROOT_DIR'] );
@@ -129,24 +129,9 @@ class RudraX {
 		self::findAndExecuteController ();
 		
 		self::invokeController ();
-		DBService::close ();
-		
+
 		Browser::time ( "Before Saving" );
 		Config::save ();
-		Browser::time ( "After Saving" );
-		$clientConfig = Config::get ( "CLIENT_CONST" );
-		/*
-		 * $RX_ENCRYPT_PATH is applicable only if either MINFY or MERGE, this variable ise used by .htaccess file
-		 */
-		$RX_ENCRYPT_PATH = (! RX_MODE_DEBUG) && ($clientConfig ["RX_JS_MIN"] || $clientConfig ["RX_JS_MERGE"]);
-		Browser::header ( RX_MODE_DEBUG . "." . $clientConfig ["RX_JS_MIN"] . "." . $clientConfig ["RX_JS_MERGE"] );
-		if ($RX_ENCRYPT_PATH) {
-			setcookie ( 'RX-ENCRYPT-PATH', "TRUE", 0, "/" );
-			define ( "RX_ENCRYPT_PATH", true );
-		} else {
-			removecookie ( 'RX-ENCRYPT-PATH' );
-			define ( "RX_ENCRYPT_PATH", false );
-		}
 		Browser::time ( "Invoked:Ends" );
 	}
 }
@@ -311,31 +296,6 @@ class Browser {
 		if (BROWSER_LOGS) {
 			return self::$console->printlogsOnHeader ();
 		}
-	}
-}
-
-class DBService {
-	public static $connected = false;
-	public static $map = array ();
-	public static $defaultDb = null;
-	public static function getDB() {
-		if (self::$defaultDb == null) {
-			self::$defaultDb = self::initDB ( Config::getProperty ( "GLOBAL", "DEFAULT_DB" ) );
-		}
-		return self::$defaultDb;
-	}
-	public static function close($configname = NULL) {
-		if ($configname == NULL && self::$defaultDb != null) {
-			self::$defaultDb->close ();
-		}
-	}
-	public static function initDB($configname) {
-		if (! self::$connected) {
-			include_once ("db/AbstractDb.php");
-			self::$connected = true;
-		}
-		self::$map [$configname] = new AbstractDb ( Config::getSection ( $configname ) );
-		return self::$map [$configname];
 	}
 }
 

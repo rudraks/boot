@@ -12,6 +12,11 @@
       "homepage": "http://lalittanwar.com"
     }
   ],
+  "autoload": {
+    "psr-4": {
+      "RudraX\\": ""
+    }
+  },
   "require": {
     "rudrax/utils": ">=0.0.4",
     "rudrax/annotations": "1.*",
