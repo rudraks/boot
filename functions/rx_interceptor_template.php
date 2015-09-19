@@ -2,7 +2,7 @@
 include_once (RUDRA . "/smarty/Smarty.class.php");
 function rx_interceptor_template($user, $info, $handlerName) {
 	$user->validate ();
-	include_once (RUDRA . "/core/handler/AbstractHandler.php");
+	include_once (RUDRA . "/boot/handler/AbstractHandler.php");
 	
 	$handlerInfo = ClassUtil::getHandler ( $handlerName );
 	

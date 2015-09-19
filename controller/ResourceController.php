@@ -6,7 +6,7 @@
 * and open the template in the editor.
 *
 */
-include_once(RUDRA."/core/controller/AbstractController.php");
+include_once(RUDRA."/boot/controller/AbstractController.php");
 
 class ResourceController extends AbstractController {
 
@@ -16,7 +16,7 @@ class ResourceController extends AbstractController {
 	 *
 	 */
 	function combineJs(){
-		include_once (RUDRA . "/core/handler/ResourceHandler.php");
+		include_once (RUDRA . "/boot/handler/ResourceHandler.php");
 		//echo "Booba";
 		$handler = new ResourceHandler();
 		$handler->invokeHandler();
@@ -28,7 +28,7 @@ class ResourceController extends AbstractController {
 	 *
 	 */
 	function buildJSFile($mdfile,$q){
-		include_once (RUDRA . "/core/model/Header.php");
+		include_once (RUDRA . "/boot/model/Header.php");
 		$hdr = new Header(); 
 		$version = "version : ".$_REQUEST["_"];
 		$target = str_replace ("buildfile/js/","", $_GET['q']);
@@ -44,7 +44,7 @@ class ResourceController extends AbstractController {
 	 *
 	 */
 	function buildFile($mdfile,$q){
-		include_once (RUDRA . "/core/model/Header.php");
+		include_once (RUDRA . "/boot/model/Header.php");
 		$hdr = new Header();
 		$version = "-_".$_REQUEST["_"];
 		$target = str_replace ("buildfile/css/","", $_GET['q']);
@@ -64,7 +64,7 @@ class ResourceController extends AbstractController {
 	 *
 	 */
 	function bundleJson($version){
-		include_once (RUDRA . "/core/model/Header.php");
+		include_once (RUDRA . "/boot/model/Header.php");
 		Header::init(true);
 		\RudraX\Utils\ResourceUtil::build_read(Header::get_build_file_path());
 	}
@@ -105,7 +105,7 @@ class ResourceController extends AbstractController {
 	function offline($mdfile){
 		header('Content-type: text/html');
 		header('Cache-Control: no-cache');
-		readfile("../".RUDRA."/core/offline/offline.html");
+		readfile("../".RUDRA."/boot/offline/offline.html");
 	}
 	
 	/** Default RudraX Plug
@@ -116,7 +116,7 @@ class ResourceController extends AbstractController {
 	function offlineJS($mdfile){
 		header('Content-type: application/javascript');
 		header('Cache-Control: no-cache');
-		readfile("../".RUDRA."/core/offline/offline.js");
+		readfile("../".RUDRA."/boot/offline/offline.js");
 	}
 	/** Default RudraX Plug
 	 *
@@ -126,6 +126,6 @@ class ResourceController extends AbstractController {
 	function offlineCSS($mdfile){
 		header('Content-type: text/css');
 		header('Cache-Control: no-cache');
-		readfile("../".RUDRA."/core/offline/offline.css");
+		readfile("../".RUDRA."/boot/offline/offline.css");
 	}
 }

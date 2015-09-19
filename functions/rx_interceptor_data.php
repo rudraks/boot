@@ -8,7 +8,7 @@
  */
 function rx_interceptor_data($user, $info, $handlerName) {
 	$user->validate ();
-	include_once (RUDRA . "/core/handler/AbstractHandler.php");
+	include_once (RUDRA . "/boot/handler/AbstractHandler.php");
 	
 	$handlerInfo = ClassUtil::getHandler ( $handlerName );
 	

@@ -1,11 +1,11 @@
 <?php
 
 include_once (RUDRA . "/smarty/Smarty.class.php");
-include_once (RUDRA . "/core/model/Header.php");
-include_once (RUDRA . "/core/model/Page.php");
+include_once (RUDRA . "/boot/model/Header.php");
+include_once (RUDRA . "/boot/model/Page.php");
 function rx_interceptor_page($user, $info, $handlerName) {
 	$user->validate ();
-	include_once (RUDRA . "/core/handler/AbstractHandler.php");
+	include_once (RUDRA . "/boot/handler/AbstractHandler.php");
 	
 	$handlerInfo = ClassUtil::getHandler ( $handlerName );
 	
@@ -58,7 +58,7 @@ function rx_interceptor_page($user, $info, $handlerName) {
 				
 				$tpl->assign ( 'BODY_FILES', $view_path );
 				$tpl->assign ( 'page_json', json_encode ( $page->data->data ) );
-				$tpl->display ( RUDRA . "/core/view/full.tpl" );
+				$tpl->display ( RUDRA . "/boot/view/full.tpl" );
 				Browser::log ( "header", $header->css, $header->scripts );
 				Browser::printlogs ();
 			}

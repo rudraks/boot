@@ -1,5 +1,5 @@
 {
-	"name": "rudrax/core",
+	"name": "rudrax/boot",
 	"type": "library",
 	"description": "Suporting library for Rudrax",
 	"keywords": ["rudra", "API", "controller", "smarty"],
