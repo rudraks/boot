@@ -1,5 +1,6 @@
 <?php
 
+use \app\model\RxCache;
 
 class ClassUtil {
 
@@ -69,7 +70,7 @@ class ClassUtil {
 			return $UserClassInfo["className"];
 		} else {
 			include_once "model/AbstractUser.php";
-			return "DefaultUser";
+			return "app\\model\\DefaultUser";
 		}
 	}
 	

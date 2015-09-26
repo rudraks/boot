@@ -7,6 +7,7 @@ include_once ("model/RxCache.php");
 include_once ("ClassUtil.php");
 
 use \RudraX\Utils\FileUtil;
+use \app\model\RxCache;
 
 class RudraX {
 	public static $websitecache;
@@ -16,7 +17,7 @@ class RudraX {
 	public static function init() {
 		Browser::init ();
 		ClassUtil::init ();
-		self::$ANNOTATIONS = new \RxCache ( "annotation", true );
+		self::$ANNOTATIONS = new RxCache ( "annotation", true );
 	}
 	public static function WebCache() {
 		if (self::$websitecache == NULL)

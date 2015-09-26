@@ -1,10 +1,6 @@
 <?php
 
-namespace RudraX\Controller {
-
-    /*
-     * To change this license header, choose License Headers in Project Properties. To change this template file, choose Tools | Templates and open the template in the editor.
-     */
+namespace app\controller {
 
     abstract class AbstractController
     {
@@ -65,9 +61,7 @@ namespace RudraX\Controller {
             }
 
             if ($perform) {
-                $this->_interceptor_($info, call_method_by_object($this, $info ["method"], $params,
-                    $info ["requestParams"]
-                ));
+                $this->_interceptor_($info, $params);
             }
 
             if ($perform && $cache) {
@@ -79,44 +73,22 @@ namespace RudraX\Controller {
             }
         }
 
-        public function _interceptor_($info, $controllerOutput)
+        public function _interceptor_($info, $params)
         {
-            switch ($info ["type"]) {
-                case "page" :
-                    $this->_pageInterceptor_($info, $controllerOutput);
-                    break;
-                case "template" :
-                    $this->_templateInterceptor_($info, $controllerOutput);
-                    break;
-                case "json" :
-                    $this->_jsonInterceptor_($info, $controllerOutput);
-                    break;
-                case "data" :
-                    $this->_dataInterceptor_($info, $controllerOutput);
-                    break;
-                default :
-                    break;
+            if(!isset($info ["type"])){
+                $info ["type"] = "data";
             }
-        }
+            if (isset($info ["type"])) {
+                $controller = $this;
+                return call_user_func(
+                    rx_function("rx_interceptor_" . $info ["type"]),
+                    $this->user, $info, $params, function () use ($controller,$info,&$params) {
+                        return call_method_by_object($controller,
+                            $info ["method"], $params, $info ["requestParams"]
+                        );
+                    });
 
-        public function _pageInterceptor_($info, $controllerOutput)
-        {
-            return call_user_func(rx_function("rx_interceptor_page"), $this->user, $info, $controllerOutput);
-        }
-
-        public function _templateInterceptor_($info, $controllerOutput)
-        {
-            return call_user_func(rx_function("rx_interceptor_template"), $this->user, $info, $controllerOutput);
-        }
-
-        public function _jsonInterceptor_($info, $controllerOutput)
-        {
-            return call_user_func(rx_function("rx_interceptor_json"), $this->user, $info, $controllerOutput);
-        }
-
-        public function _dataInterceptor_($info, $controllerOutput)
-        {
-            return call_user_func(rx_function("rx_interceptor_data"), $this->user, $info, $controllerOutput);
+            }
         }
     }
 

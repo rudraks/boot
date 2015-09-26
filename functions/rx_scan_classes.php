@@ -41,6 +41,7 @@ function rx_scan_dir ($annotations,$dir){
 				if( ClassUtil::getMTime($className)>=$file->getMTime()){
 					$scan = false;
 				}
+
 				if($scan && class_exists($className)){
 					$result = $annotations->getClassAnnotations($className);
 					if(isset($result["Handler"]) && isset($result["Handler"][0]) && !empty($result["Handler"][0])){
@@ -57,12 +58,13 @@ function rx_scan_dir ($annotations,$dir){
 			} else if(fnmatch("*/controller/*.php",$file->getPathname()) || fnmatch("*\\\controller\\\*.php",$file->getPathname())){
 	
 				require_once $file->getPathname();
-				$className = str_replace(".php", "", $file->getFilename());
+				$className =  "app\\controller\\".str_replace(".php", "", $file->getFilename());
 					
 				$scan  = true;
 				if(ClassUtil::getMTime($className)>=$file->getMTime()){
 					$scan = false;
 				}
+
 				if($scan && class_exists($className)){
 					$methods = get_class_methods($className);
 					foreach ($methods as $method){
@@ -89,7 +91,7 @@ function rx_scan_dir ($annotations,$dir){
 				}
 			} else if(fnmatch("*/model/*.php",$file->getPathname()) || fnmatch("*\\\model\\\*.php",$file->getPathname())){
 				require_once $file->getPathname();
-				$className = str_replace(".php", "", $file->getFilename());
+				$className = "app\\model\\".str_replace(".php", "", $file->getFilename());
 	
 				$scan  = true;
 				if( ClassUtil::getMTime($className)>=$file->getMTime()){
