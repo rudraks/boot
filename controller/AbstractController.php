@@ -63,6 +63,7 @@ namespace app\controller {
             if ($perform) {
                 $this->_interceptor_($info, $params);
             }
+            return null;
 
             if ($perform && $cache) {
                 $response = ob_get_contents();
@@ -82,10 +83,14 @@ namespace app\controller {
                 $controller = $this;
                 return call_user_func(
                     rx_function("rx_interceptor_" . $info ["type"]),
-                    $this->user, $info, $params, function () use ($controller,$info,&$params) {
-                        return call_method_by_object($controller,
-                            $info ["method"], $params, $info ["requestParams"]
-                        );
+                    $this->user, $info, $params, function ($newParams) use ($controller,$info,$params) {
+                        try {
+                            return call_method_by_object($controller,
+                                $info ["method"], $newParams, $info ["requestParams"]
+                            );
+                        } catch(\Exception $e){
+                            print_line("hey you",$e->getMessage());
+                        }
                     });
 
             }

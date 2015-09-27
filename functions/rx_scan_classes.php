@@ -51,7 +51,6 @@ function rx_scan_dir ($annotations,$dir){
 						"mtime" => $file->getMTime(),
 						"requestParams" => isset($result["RequestParams"])
 						));
-						Browser::warn("HandleScanned::",	ClassUtil::getHandler($result["Handler"][0]));
 						ClassUtil::setMTime($className,$file->getMTime());
 					}
 				}
@@ -69,7 +68,6 @@ function rx_scan_dir ($annotations,$dir){
 					$methods = get_class_methods($className);
 					foreach ($methods as $method){
 						$result = $annotations->getMethodAnnotations($className,$method);
-						Browser::error("ControllerScanned::",$result);
 						if(isset($result["RequestMapping"])
 						&&	isset($result["RequestMapping"][0])
 						&&  isset($result["RequestMapping"][0]["url"])){
@@ -86,7 +84,6 @@ function rx_scan_dir ($annotations,$dir){
 							);
 						}
 					}
-					Browser::warn("ControllerScanned::",$allController[$result["RequestMapping"][0]["url"]]);
 					ClassUtil::setMTime($className,$file->getMTime());
 				}
 			} else if(fnmatch("*/model/*.php",$file->getPathname()) || fnmatch("*\\\model\\\*.php",$file->getPathname())){
@@ -107,7 +104,6 @@ function rx_scan_dir ($annotations,$dir){
 						"mtime" => $file->getMTime(),
 						"type" => $result["Model"][0]
 						));
-						Browser::warn("ModelScanned::",	ClassUtil::getModel($result["Model"][0]));
 						ClassUtil::setMTime($className,$file->getMTime());
 					}
 				}

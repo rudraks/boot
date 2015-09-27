@@ -4,6 +4,11 @@
 
 namespace app\model {
 
+    function setUpPHPFastCache(){
+        include_once(RUDRA . "/phpfastcache/phpfastcache.php");
+        \phpFastCache::setup("path","./build");
+    }
+
     class RxCache
     {
         public static $cache;
@@ -23,7 +28,7 @@ namespace app\model {
                 // if($this->cache==NULL){
                 // $this->cache = new Memcache;
                 // }
-                include_once(RUDRA . "/phpfastcache/phpfastcache.php");
+                setUpPHPFastCache();
                 $this::$cache = new \phpFastCache ();
             } else {
                 $this->hard_file = BUILD_PATH . 'rc_' . PROJECT_ID . "_" . $prefix . '.php';

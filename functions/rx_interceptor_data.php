@@ -8,5 +8,5 @@
  */
 function rx_interceptor_data($user, $controllerInfo, $params, $controllerExecute)
 {
-    return $controllerExecute();
+    return $controllerExecute($params);
 }

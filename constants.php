@@ -16,14 +16,14 @@ define("RESOURCE_PATH", PROJECT_ROOT_DIR."resources/");
 
 function define_globals ($globals){
 
-	set_include_path ( $globals ['APP_ROOT_PATH'] );
-
+	set_include_path ( $globals ['PROJECT_ROOT_DIR'] );
 	define ( "BASE_PATH", dirname ( __FILE__ ) );
-
+    //return null;
 	foreach ( $globals as $key=>$value ) {
-		define ( $key, $value );
+        if(!defined($key)){
+            define ( $key, $value );
+        }
 	}
-	
 }
 
 ?>

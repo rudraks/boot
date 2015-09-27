@@ -5,9 +5,12 @@ function rx_interceptor_template($user, $controllerInfo, $params, $controllerExe
 {
 
     $tpl = new Smarty ();
-    $params["model"] = $tpl;
+
     call_user_func(rx_function("rx_set_smarty_paths"), ($tpl));
-    $view = $controllerExecute();
+
+    $params["model"] = $tpl;
+
+    $view = $controllerExecute($params);
 
     $tpl->debugging = RX_SMARTY_DEBUG;
 

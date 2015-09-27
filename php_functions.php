@@ -95,6 +95,7 @@ function call_method_by_class(ReflectionClass $reflectionClass, $object, $method
 function call_method_by_object($object, $methodName, $argArray, $from_request = NULL) {
 	$reflectionClass = new ReflectionClass ( get_class ( $object ) );
 	$reflectionMethod = $reflectionClass->getMethod ( $methodName );
+
 	return call_user_func_array ( array (
 			$object,
 			$methodName 

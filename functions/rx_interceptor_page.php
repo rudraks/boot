@@ -12,7 +12,7 @@ function rx_interceptor_page($user, $controllerInfo, $params, $controllerExecute
     $params["model"] = $tpl;
     $header = new \app\model\Header ($tpl);
     call_user_func(rx_function("rx_set_smarty_paths"), ($tpl));
-    $view = $controllerExecute();
+    $view = $controllerExecute($params);
 
     $tpl->debugging = RX_SMARTY_DEBUG;
 

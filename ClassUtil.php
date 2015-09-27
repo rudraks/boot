@@ -65,11 +65,11 @@ class ClassUtil {
 	
 	public static function getSessionUserClass(){
 		$UserClassInfo = ClassUtil::getModel("sessionUser");
+        include_once "model/AbstractUser.php";
 		if($UserClassInfo != NULL){
 			include_once $UserClassInfo["filePath"];
 			return $UserClassInfo["className"];
 		} else {
-			include_once "model/AbstractUser.php";
 			return "app\\model\\DefaultUser";
 		}
 	}
