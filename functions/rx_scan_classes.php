@@ -1,9 +1,9 @@
 <?php
 
-include_once RUDRA."/annotations/Annotations.php";
-include_once(RUDRA."/boot/handler/AbstractHandler.php");
-include_once(RUDRA."/boot/controller/AbstractController.php");
-include_once(RUDRA."/boot/ClassUtil.php");
+require_once RUDRA."annotations/Annotations.php";
+include_once(RUDRA."boot/handler/AbstractHandler.php");
+include_once(RUDRA."boot/controller/AbstractController.php");
+include_once(RUDRA."boot/ClassUtil.php");
 
 function rx_scan_classes(){
 

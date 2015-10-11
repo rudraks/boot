@@ -15,6 +15,7 @@
   "autoload": {
     "psr-4": {
       "RudraX\\": "",
+      "RudraX\\Service\\": "service/",
       "app\\": ""
     }
   },

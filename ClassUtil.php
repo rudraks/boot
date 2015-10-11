@@ -7,14 +7,17 @@ class ClassUtil {
 	public static $cache = null;
 	public static $allController;
 
-	public static function init(){
+	public static function init($clear=false){
 		if(self::$cache==null){
 			self::$cache = new RxCache("annotation",true);
+		}
+		if($clear==true){
+			self::$cache->clear();
 		}
 	}
 
 	public static function scan(){
-		self::init();
+		self::init(true);
 		call_user_func(rx_function("rx_scan_classes"));
 	}
 

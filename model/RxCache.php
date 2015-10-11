@@ -83,7 +83,7 @@ namespace app\model {
             header("X-C-" . $this->name . ": FALSE");
             if (!$check || $this->dirty) {
                 header("X-C-" . $this->name . ": TRUE");
-                file_put_contents($this->hard_file, '<?php return ' . var_export(self::$cache_array [$this->name], true) . ';');
+                file_put_contents(\RudraX\Utils\FileUtil::uniform_path($this->hard_file), '<?php return ' . var_export(self::$cache_array [$this->name], true) . ';');
             }
         }
 

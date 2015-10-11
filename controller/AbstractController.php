@@ -2,6 +2,8 @@
 
 namespace app\controller {
 
+    use \app\model\RxCache;
+
     abstract class AbstractController
     {
         public static $HEADER_GLUE = ";-$-;";
@@ -31,6 +33,7 @@ namespace app\controller {
             $perform = true;
             $md5key = null;
             if ($cache) {
+                header("X-Rudrax-Enabled: true");
                 $this->responseCache = new RxCache ('responseCache');
                 $this->headerCache = new RxCache ('headerCache');
 
@@ -42,10 +45,11 @@ namespace app\controller {
                 // Pragma header removed should the server happen to set it automatically
                 // Pragma headers can make browser misbehave and still ask data from server
                 header_remove('Pragma');
-                $md5key = md5($_SERVER [REQUEST_URI]);
+                $md5key = md5($_SERVER ["REQUEST_URI"]);
 
                 $response = $this->responseCache->get($md5key, FALSE);
                 if (!empty ($response)) {
+
                     $perform = false;
                     echo $response;
                     $headerstr = $this->headerCache->get($md5key);
@@ -53,7 +57,7 @@ namespace app\controller {
                     foreach ($headers as $header) {
                         header($header);
                     }
-                    Browser::header("fromCahce");
+                    header("X-Rudrax-Cached: true");
                     exit ();
                 } else {
                     // ob_start('ob_gzhandler');
@@ -63,7 +67,6 @@ namespace app\controller {
             if ($perform) {
                 $this->_interceptor_($info, $params);
             }
-            return null;
 
             if ($perform && $cache) {
                 $response = ob_get_contents();
