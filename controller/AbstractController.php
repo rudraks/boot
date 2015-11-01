@@ -32,6 +32,23 @@ namespace app\controller {
             $cache = $info ["cache"];
             $perform = true;
             $md5key = null;
+
+            $validate = $this->user->validate();
+
+            if($info["auth"] && !$validate){
+                $this->user->basicAuth();
+            }
+
+            if($info["roles"] !== FALSE){
+                if(!in_array($this->user->role,$info["roles"])){
+                    print_r($info["roles"]);
+                    echo($this->user->role);
+                    header("HTTP/1.1 403 Unauthorized");
+                    exit();
+                }
+            }
+
+
             if ($cache) {
                 header("X-Rudrax-Enabled: true");
                 $this->responseCache = new RxCache ('responseCache');
@@ -92,7 +109,11 @@ namespace app\controller {
                                 $info ["method"], $newParams, $info ["requestParams"]
                             );
                         } catch(\Exception $e){
-                            print_line("hey you",$e->getMessage());
+                            print_line("**============**");
+                            print_line("Controller Exception",$e->getMessage());
+                            print_line("**--------------**");
+                            print_line($e->getTraceAsString());
+                            print_line("**============**");
                         }
                     });
 

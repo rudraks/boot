@@ -41,7 +41,7 @@ class RudraX
         $mapObj = self::$url_cache->get($mapping);
 
         if ($mapObj == null || RX_MODE_DEBUG) {
-            $mapper = preg_replace('/\{(.*?)\}/m', '(?P<$1>[\w\.]*)', str_replace('/', '#', $mapping));
+            $mapper = preg_replace('/\{(.*?)\}/m', '(?P<$1>[\-\=\w\.]*)', str_replace('/', '#', $mapping));
             $mapperKey = preg_replace('/\{(.*?)\}/m', '*', $mapping) . "*";
             $mapperArray = explode("#", $mapper);
             $mapperSize = (empty ($mapping) ? 0 : count($mapperArray)) + 1;

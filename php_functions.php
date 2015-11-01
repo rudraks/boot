@@ -89,13 +89,18 @@ function get_request_param($key, $skipEmpty = FALSE) {
 }
 function get_argument_array($reflectionMethod, $argArray, $from_request = TRUE, $skipEmpty = FALSE) {
 	$arr = array ();
+    //var_dump($argArray);
 	foreach ( $reflectionMethod->getParameters () as $key => $val ) {
+        //print_line("0==".$val->getName ()."===".$val);
 		if (isset ( $argArray [$val->getName ()] ) && ! ($skipEmpty && empty ( $argArray [$val->getName ()] ))) {
 			$arr [$val->getName ()] = $argArray [$val->getName ()];
+           // print_line("1==".($val->getName ())."===");
 		} else if ($from_request && ! is_null ( get_request_param ( $val->getName (), $skipEmpty ) )) {
 			$arr [$val->getName ()] = get_request_param ( $val->getName () );
+            //print_line("2==".$val->getName ()."===".$val);
 		} else if ($val->isDefaultValueAvailable ()) {
 			$arr [$val->getName ()] = $val->getDefaultValue ();
+            //print_line("3==".$val->getName ()."===".$val);
 		} else {
 			$arr [$val->getName ()] = NULL;
 		}
