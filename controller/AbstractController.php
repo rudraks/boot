@@ -110,7 +110,7 @@ namespace app\controller {
                             );
                         } catch(\Exception $e){
                             print_line("**============**");
-                            print_line("Controller Exception",$e->getMessage());
+                            print_line("Controller Exception:".$e->getMessage());
                             print_line("**--------------**");
                             print_line($e->getTraceAsString());
                             print_line("**============**");

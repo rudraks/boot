@@ -9,6 +9,7 @@
  */
 function rx_interceptor_json($user, $controllerInfo, $params, $controllerExecute)
 {
+    header('Content-type: application/json; charset=UTF-8');
     try {
         echo json_encode($controllerExecute($params));
     } catch (Exception $e) {
