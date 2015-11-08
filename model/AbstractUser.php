@@ -101,7 +101,10 @@ namespace app\model {
             global $_SERVER;
             global $_SESSION;
             // the valid_user checks the user/password (very primitive test in this example)
-            if (!$this->auth($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW'])) {
+            $username = isset($_SERVER['PHP_AUTH_USER']) ? $_SERVER['PHP_AUTH_USER'] : null;
+            $password = isset($_SERVER['PHP_AUTH_PW']) ? $_SERVER['PHP_AUTH_PW'] : null;
+
+            if (!$this->auth($username, $password)) {
                 session_destroy();
                 header("WWW-Authenticate: Basic realm=\"My Rudrax\"");
                 header("HTTP/1.0 401 Unauthorized");
