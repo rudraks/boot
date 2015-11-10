@@ -263,6 +263,7 @@ class Config
 
             define ("FIRST_RELOAD", TRUE);
             $RELOAD_VERSION = microtime(true);
+            RxCache::clean();
             self::$cache->set("RELOAD_VERSION", $RELOAD_VERSION);
 
             $DEFAULT_CONFIG = parse_ini_file("_project.properties", TRUE);

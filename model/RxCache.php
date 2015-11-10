@@ -11,7 +11,7 @@ namespace app\model {
 
     class RxCache
     {
-        public static $cache;
+        public static $cache = null;
         public $prefix;
         public $hard;
         public $hard_file;
@@ -29,7 +29,7 @@ namespace app\model {
                 // $this->cache = new Memcache;
                 // }
                 setUpPHPFastCache();
-                $this::$cache = new \phpFastCache ();
+                self::$cache = new \phpFastCache ();
             } else {
                 $this->hard_file = BUILD_PATH . 'rc_' . PROJECT_ID . "_" . $prefix . '.php';
                 if ($this->exists()) {
@@ -46,7 +46,7 @@ namespace app\model {
         public function set($key, $object, $timeout = 60)
         {
             if (!$this->hard) {
-                return ($this::$cache) ? $this::$cache->set($this->prefix . $key, $object) : false;
+                return (self::$cache) ? self::$cache->set($this->prefix . $key, $object) : false;
                 // return Cache::save ($this->prefix.$key , $object,$timeout);
                 return apc_store($this->prefix . $key, $object, $timeout);
                 // return ($this->cache) ? $this->cache->set($key,$object,MEMCACHE_COMPRESSED,$timeout) : false;
@@ -59,7 +59,7 @@ namespace app\model {
         public function get($key, $default = false)
         {
             if (!$this->hard) {
-                return ($this::$cache) ? $this::$cache->get($this->prefix . $key) : $default;
+                return (self::$cache) ? self::$cache->get($this->prefix . $key) : $default;
                 // return Cache::get($this->prefix.$key) ;
                 return apc_fetch($this->prefix . $key);
                 // return ($this->cache) ? $this->cache->get($key) : false;
@@ -112,6 +112,12 @@ namespace app\model {
             if ($this->exists()) {
                 unlink($this->hard_file);
                 self::$cache_array [$this->name] = null;
+            }
+        }
+        public static function clean(){
+            $clearCache = new RxCache();
+            if(self::$cache!=null){
+                self::$cache->clean();
             }
         }
     }
