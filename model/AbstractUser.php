@@ -110,6 +110,7 @@ namespace app\model {
                 header("HTTP/1.0 401 Unauthorized");
                 exit();
             }
+            header('X-auth-event : true');
             $this->uname = $_SERVER['PHP_AUTH_USER'];
             $this->password = $_SERVER['PHP_AUTH_PW'];
             // OK, the user is authenticated
@@ -142,7 +143,17 @@ namespace app\model {
 
         public abstract function auth($username, $passowrd);
 
-        public abstract function unauth();
+        public function unauth()
+        {
+            global $HTTP_SERVER_VARS;
+            global $PHP_SELF;
+            header('X-auth-event : true');
+            if (isset($_SESSION['reauth-in-progress'])) {
+                session_destroy();
+                //header("Location: http://" . $HTTP_SERVER_VARS['HTTP_HOST'] . $PHP_SELF);
+            } else
+                self::basicUnAuth();
+        }
 
         public function isValid()
         {
