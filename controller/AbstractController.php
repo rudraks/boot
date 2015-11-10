@@ -48,7 +48,6 @@ namespace app\controller {
                 }
             }
 
-
             if ($cache) {
                 header("X-Rudrax-Enabled: true");
                 $this->responseCache = new RxCache ('responseCache');

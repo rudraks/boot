@@ -50,6 +50,7 @@ namespace app\model {
             if (!empty($_COOKIE["rx_useruid"]) || !empty($_SESSION["rx_useruid"])) {
                 if (isset($_SESSION['uid']) && trim($_SESSION['uid'])) {
                     $info = self::$usercache->get($_SESSION['uid']);
+                    //var_dump($info);
                     if ($info) {
                         $this->valid = TRUE;
                         $this->uid = $_SESSION['uid'];
