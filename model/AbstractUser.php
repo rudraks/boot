@@ -92,7 +92,7 @@ namespace app\model {
         public function setInValid()
         {
             $this->valid = FALSE;
-            self::$usercache->get($this->uid);
+            self::$usercache->set($this->uid, null);
             session_destroy();
         }
 
