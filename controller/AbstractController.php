@@ -53,7 +53,12 @@ namespace app\controller {
                 $this->responseCache = new RxCache ('responseCache');
                 $this->headerCache = new RxCache ('headerCache');
 
-                $this->cacheDuration = 300; // in seconds
+
+                if(defined("RX_RESP_CACHE_TIME")){
+                    $this->cacheDuration = RX_RESP_CACHE_TIME;
+                } else {
+                    $this->cacheDuration = 900; // in seconds
+                }
                 // Client is told to cache these results for set duration
                 header('Cache-Control: public,max-age=' . $this->cacheDuration . ',must-revalidate');
                 header('Expires: ' . gmdate('D, d M Y H:i:s', ($_SERVER ['REQUEST_TIME'] + $this->cacheDuration)) . ' GMT');
@@ -93,6 +98,21 @@ namespace app\controller {
             }
         }
 
+        public function caching_headers($file,$timestamp){
+            $md5key = md5($timestamp.$file);
+            $gmt_mtime=gmdate('r', $timestamp);
+            header('ETag: "'.$md5key.'"');
+            if(isset($_SERVER['HTTP_IF_MODIFIED_SINCE'])||isset($_SERVER['HTTP_IF_NONE_MATCH'])){
+                if ($_SERVER['HTTP_IF_MODIFIED_SINCE']==$gmt_mtime||str_replace('"','',stripslashes($_SERVER['HTTP_IF_NONE_MATCH']))==$md5key){
+                    header('HTTP/1.1 304 Not Modified');
+                    exit();
+                }
+            }
+            header('Last-Modified: '.$gmt_mtime);
+            header('Cache-Control: public');
+            return $md5key;
+        }
+
         public function _interceptor_($info, $params)
         {
             if(!isset($info ["type"])){
@@ -108,11 +128,11 @@ namespace app\controller {
                                 $info ["method"], $newParams, $info ["requestParams"]
                             );
                         } catch(\Exception $e){
-                            print_line("**============**");
+                            print_line("<div style='display:hidden'>**============**");
                             print_line("Controller Exception:".$e->getMessage());
                             print_line("**--------------**");
                             print_line($e->getTraceAsString());
-                            print_line("**============**");
+                            print_line("**============**</div>");
                         }
                     });
 
