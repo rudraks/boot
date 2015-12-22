@@ -48,6 +48,9 @@ namespace app\controller {
                 }
             }
 
+            $cache = $cache || (isset($info ["guestcache"]) && $info ["guestcache"] && !$validate);
+
+            header("Pragma:");
             if ($cache) {
                 header("X-Rudrax-Enabled: true");
                 $this->responseCache = new RxCache ('responseCache');
