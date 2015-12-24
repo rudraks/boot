@@ -114,3 +114,10 @@ namespace app\controller {
     Class Level Annotations
 - **@Model** - [sessionUser] - 
     - *sessionUser* - if used then that model will be used as default Session user, Class must extend app\model\AbstractUser
+
+
+## Tweakings
+To build project/clear cache/rebuild annotations - Hit this URL from Browser
+```
+    http://localhost/?RX_MODE_BUILD=TRUE&RX_MODE_DEBUG=TRUE
+```
