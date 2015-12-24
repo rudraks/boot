@@ -105,9 +105,9 @@ namespace app\controller {
       - *type* -  response type [template|json|data] - data
       - *auth* - if url acccess requires basic auth [TRUE|FALSE] - FALSE
       - *cache* - if response is cacheable by server [TRUE|FALSE] - FALSE
-      - *guestcache* - cacheable only if guest user (iser not valid) [TRUE|FALSE] - FALSE
+      - *guestcache* - cacheable only if guest user (user not valid) [TRUE|FALSE] - FALSE
 - **@RequestParams** - if query params to be fetched and used in controller. [TRUE|FALSE] - FALSE  
-- **@Role** - [user defined values] - used only if mentioned
+- **@Role** - [user defined values] - used only if mentioned, users with matching $user->{role} will have access to api.
 
 
 ## Model Annotation Options
