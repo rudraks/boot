@@ -98,14 +98,19 @@ namespace app\controller {
 ```
 
 ## Controller Annotation Options
-- @RequestMapping - URL info
-  - **url** - url pattern to match
-  - **method** - request method [GET/POST/PUT/DELETE] - used only if mentioned
-  - **type** -  response type [template/json/data - data
-  - **auth** - if url acccess requires basic auth [TRUE|FALSE] - FALSE
-  - **cache** - if response is cacheable by server [TRUE|FALSE] - FALSE
-  - **guestcache** - cacheable only if guest user (iser not valid) [TRUE|FALSE] - FALSE
-- @RequestParams - if query params to be fetched and used in controller. [TRUE|FALSE] - FALSE  
-- @Role - [user defined values] - used only if mentioned
+    All are method level annotations
+- **@RequestMapping** - URL info
+      - *url* - url pattern to match
+      - *method* - request method [GET/POST/PUT/DELETE] - used only if mentioned
+      - *type* -  response type [template/json/data - data
+      - *auth* - if url acccess requires basic auth [TRUE|FALSE] - FALSE
+      - *cache* - if response is cacheable by server [TRUE|FALSE] - FALSE
+      - *guestcache* - cacheable only if guest user (iser not valid) [TRUE|FALSE] - FALSE
+- **@RequestParams** - if query params to be fetched and used in controller. [TRUE|FALSE] - FALSE  
+- **@Role** - [user defined values] - used only if mentioned
 
 
+## Model Annotation Options
+    Class Level Annotations
+- **@Model** - [sessionUser] - 
+    - *sessionUser* - if used then that model will be used as default Session user, Class must extend app\model\AbstractUser
