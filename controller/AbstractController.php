@@ -29,7 +29,7 @@ namespace app\controller {
 
         public function _interpret_($info, $params)
         {
-            $cache = $info ["cache"] && !(isset($_REQUEST["_NOCACHE_"]));
+            $cache = $info ["cache"] && !(isset($_REQUEST["_NOCACHE_"]) || isset($_REQUEST["_AUTH_"]));
             $perform = true;
             $md5key = null;
 
