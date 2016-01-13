@@ -29,7 +29,8 @@ namespace app\controller {
 
         public function _interpret_($info, $params)
         {
-            $cache = $info ["cache"] && !(isset($_REQUEST["_NOCACHE_"]) || isset($_REQUEST["_AUTH_"]));
+            $nocache = (isset($_REQUEST["_AUTH_"]) || isset($_REQUEST["_NOCACHE_"]));
+            $cache = $info ["cache"] && !($nocache);
             $perform = true;
             $md5key = null;
 
@@ -48,7 +49,7 @@ namespace app\controller {
                 }
             }
 
-            $cache = $cache || (isset($info ["guestcache"]) && $info ["guestcache"] && !$validate);
+            $cache = ($cache || (isset($info ["guestcache"]) && $info ["guestcache"] && !$validate)) && !$nocache;
 
             header("Pragma:");
             if ($cache) {
