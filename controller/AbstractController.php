@@ -52,6 +52,8 @@ namespace app\controller {
             $cache = ($cache || (isset($info ["guestcache"]) && $info ["guestcache"] && !$validate)) && !$nocache;
 
             header("Pragma:");
+            header("X-Rudrax-Authd: false");
+
             if ($cache) {
                 header("X-Rudrax-Enabled: true");
                 $this->responseCache = new RxCache ('responseCache');
@@ -83,11 +85,18 @@ namespace app\controller {
                         header($header);
                     }
                     header("X-Rudrax-Cached: true");
+                    if($validate){
+                        header("X-Rudrax-Authd: true");
+                    }
                     exit ();
                 } else {
+                    if($validate){
+                        header("X-Rudrax-Authd: true");
+                    }
                     // ob_start('ob_gzhandler');
                 }
             }
+
 
             if ($perform) {
                 $this->_interceptor_($info, $params);
