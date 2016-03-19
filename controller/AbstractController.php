@@ -141,12 +141,17 @@ namespace app\controller {
                                 $info ["method"], $newParams, $info ["requestParams"]
                             );
                         } catch(\Exception $e){
-                            print_line("<div style='display:hidden'>**============**");
-                            print_line("Controller Exception:".$e->getMessage());
-                            print_line("**--------------**");
-                            print_line($e->getTraceAsString());
-                            print_line("**============**</div>");
+                            if(function_exists("controller_exception_handler")){
+                                controller_exception_handler($e);
+                            } else {
+                                print_line("<div style='display:none'>**============**");
+                                print_line("Controller Exception:".$e->getMessage());
+                                print_line("**--------------**");
+                                print_line($e->getTraceAsString());
+                                print_line("**============**</div>");
+                            }
                         }
+                        return "empty";
                     });
 
             }
