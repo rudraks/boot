@@ -18,6 +18,10 @@ function rx_interceptor_template($user, $controllerInfo, $params, $controllerExe
     $tpl->assign('CONTEXT_PATH', CONTEXT_PATH);
     $tpl->assign('RESOURCE_PATH', RESOURCE_PATH);
 
+    if(empty($view) {
+         echo "!!Empty Template!!";
+         return;
+    }
     if (isset ($tpl->repeatData)) {
         foreach ($tpl->repeatData as $key => $value) {
             $tpl->assign($value ['key'], $value ['value']);
@@ -25,6 +29,6 @@ function rx_interceptor_template($user, $controllerInfo, $params, $controllerExe
         }
     } else {
         $tpl->display($view . Config::get('TEMP_EXT'));
-    }
+    } 
 
 }
