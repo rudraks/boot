@@ -1,7 +1,10 @@
 # boot
+Simple and Light weight MVC framework in PHP, it serves all stable functionalties like routing (native), caching (phpFastCache), database (Redbeans & PDO), templating (Smarty), authentication (Basic,SSO & Custom), Session/Roles etc.
+
+
 ##install
 ```
-  comoser install rudrax/boot
+  composer install rudrax/boot
 ```
 
 ## Folder Structure
