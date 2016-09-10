@@ -4,7 +4,7 @@ Simple and Light weight MVC framework in PHP, it serves all stable functionaltie
 
 ##install
 ```
-  composer install rudrax/boot
+  composer install rudrax/boot --save
 ```
 
 ## Folder Structure
