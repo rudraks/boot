@@ -36,12 +36,12 @@ namespace app\controller {
 
             $validate = $this->user->validate();
 
-            if($info["auth"] && !$validate){
+            if ($info["auth"] && !$validate) {
                 $this->user->basicAuth();
             }
 
-            if($info["roles"] !== FALSE){
-                if(!in_array($this->user->role,$info["roles"])){
+            if ($info["roles"] !== FALSE) {
+                if (!in_array($this->user->role, $info["roles"])) {
                     print_r($info["roles"]);
                     echo($this->user->role);
                     header("HTTP/1.1 403 Unauthorized");
@@ -60,7 +60,7 @@ namespace app\controller {
                 $this->headerCache = new RxCache ('headerCache');
 
 
-                if(defined("RX_RESP_CACHE_TIME")){
+                if (defined("RX_RESP_CACHE_TIME")) {
                     $this->cacheDuration = RX_RESP_CACHE_TIME;
                 } else {
                     $this->cacheDuration = 900; // in seconds
@@ -85,12 +85,12 @@ namespace app\controller {
                         header($header);
                     }
                     header("X-Rudrax-Cached: true");
-                    if($validate){
+                    if ($validate) {
                         header("X-Rudrax-Authd: true");
                     }
                     exit ();
                 } else {
-                    if($validate){
+                    if ($validate) {
                         header("X-Rudrax-Authd: true");
                     }
                     // ob_start('ob_gzhandler');
@@ -111,41 +111,42 @@ namespace app\controller {
             }
         }
 
-        public function caching_headers($file,$timestamp){
-            $md5key = md5($timestamp.$file);
-            $gmt_mtime=gmdate('r', $timestamp);
-            header('ETag: "'.$md5key.'"');
-            if(isset($_SERVER['HTTP_IF_MODIFIED_SINCE'])||isset($_SERVER['HTTP_IF_NONE_MATCH'])){
-                if ($_SERVER['HTTP_IF_MODIFIED_SINCE']==$gmt_mtime||str_replace('"','',stripslashes($_SERVER['HTTP_IF_NONE_MATCH']))==$md5key){
+        public function caching_headers($file, $timestamp)
+        {
+            $md5key = md5($timestamp . $file);
+            $gmt_mtime = gmdate('r', $timestamp);
+            header('ETag: "' . $md5key . '"');
+            if (isset($_SERVER['HTTP_IF_MODIFIED_SINCE']) || isset($_SERVER['HTTP_IF_NONE_MATCH'])) {
+                if ($_SERVER['HTTP_IF_MODIFIED_SINCE'] == $gmt_mtime || str_replace('"', '', stripslashes($_SERVER['HTTP_IF_NONE_MATCH'])) == $md5key) {
                     header('HTTP/1.1 304 Not Modified');
                     exit();
                 }
             }
-            header('Last-Modified: '.$gmt_mtime);
+            header('Last-Modified: ' . $gmt_mtime);
             header('Cache-Control: public');
             return $md5key;
         }
 
         public function _interceptor_($info, $params)
         {
-            if(!isset($info ["type"])){
+            if (!isset($info ["type"])) {
                 $info ["type"] = "data";
             }
             if (isset($info ["type"])) {
                 $controller = $this;
                 return call_user_func(
                     rx_function("rx_interceptor_" . $info ["type"]),
-                    $this->user, $info, $params, function ($newParams) use ($controller,$info,$params) {
+                    $this->user, $info, $params, function ($newParams) use ($controller, $info, $params) {
                         try {
                             return call_method_by_object($controller,
                                 $info ["method"], $newParams, $info ["requestParams"]
                             );
-                        } catch(\Exception $e){
-                            if(function_exists("controller_exception_handler")){
+                        } catch (\Exception $e) {
+                            if (function_exists("controller_exception_handler")) {
                                 controller_exception_handler($e);
                             } else {
                                 print_line("<div style='display:none'>**============**");
-                                print_line("Controller Exception:".$e->getMessage());
+                                print_line("Controller Exception:" . $e->getMessage());
                                 print_line("**--------------**");
                                 print_line($e->getTraceAsString());
                                 print_line("**============**</div>");
@@ -155,6 +156,16 @@ namespace app\controller {
                     });
 
             }
+        }
+
+        public function header($key, $value)
+        {
+            return header($key . ': ' . $value);
+        }
+
+        public function status($code)
+        {
+            return http_response_code($code);
         }
     }
 
