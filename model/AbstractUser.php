@@ -51,16 +51,26 @@ namespace app\model {
                 if (isset($_SESSION['uid']) && trim($_SESSION['uid'])) {
                     $info = self::$usercache->get($_SESSION['uid']);
                     //var_dump($info);
+                    $this->valid = TRUE;
+                    $this->uid = $_SESSION['uid'];
+                    $this->uname = $_SESSION['uname'];
+                    $this->role = $_SESSION['role'];
                     if ($info) {
-                        $this->valid = TRUE;
-                        $this->uid = $_SESSION['uid'];
-                        $this->role = $_SESSION['role'];
                         $this->info = $info;
-                        return TRUE;
                     }
+                    return TRUE;
                 }
             }
             return FALSE;
+        }
+
+        public function setUser($uid=null,$uname=null,$info=array()){
+            $this->uid = $uid;
+            $this->uname = $uname;
+            foreach($info as $key => $value){
+                $this->info[$key] = $value;
+            }
+            return $this->setValid();
         }
 
         public function setValid()
@@ -72,7 +82,6 @@ namespace app\model {
             $_SESSION['uname'] = $this->uname;
             $this->info['uid'] = $this->uid;
             $this->info['uname'] = $this->uname;
-
 
             $encryptedpassword = md5($this->password);
             $rx_salt = md5($this->uname + $encryptedpassword);
@@ -87,6 +96,7 @@ namespace app\model {
 
             $this->save();
             session_write_close();
+            return TRUE;
         }
 
         public function setInValid()
@@ -174,7 +184,7 @@ namespace app\model {
         public function auth($username, $passowrd)
         {
             if (strcmp($username, "admin") == 0) {
-                $this->setValid();
+                return $this->setValid();
             }
         }
 

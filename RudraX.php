@@ -6,8 +6,8 @@ require_once "Console.php";
 include_once("model/RxCache.php");
 include_once("ClassUtil.php");
 
-use \RudraX\Utils\FileUtil;
-use \app\model\RxCache;
+use app\model\RxCache;
+use RudraX\Utils\FileUtil;
 
 class RudraX
 {
@@ -189,6 +189,12 @@ class Config
 
     public static function getSection($key)
     {
+        if (isset(\RudraX\Utils\Webapp::$SUBDOMAIN)) {
+            $section = self::$cache->get($key . ":" . \RudraX\Utils\Webapp::$SUBDOMAIN);
+            if(!is_null($section) && !empty($section)){
+                return $section;
+            }
+        }
         return self::$cache->get($key);
     }
 

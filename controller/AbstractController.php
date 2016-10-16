@@ -3,6 +3,7 @@
 namespace app\controller {
 
     use \app\model\RxCache;
+    use \app\model\AbstractUser;
 
     abstract class AbstractController
     {
@@ -138,9 +139,17 @@ namespace app\controller {
                     rx_function("rx_interceptor_" . $info ["type"]),
                     $this->user, $info, $params, function ($newParams) use ($controller, $info, $params) {
                         try {
-                            return call_method_by_object($controller,
-                                $info ["method"], $newParams, $info ["requestParams"]
-                            );
+                            $dontPrevent = true;
+                            if(method_exists($controller,"_before_controller_")){
+                                $dontPrevent = !!call_method_by_object($controller,
+                                    "_before_controller_", $newParams, $info ["requestParams"]
+                                );
+                            }
+                            if($dontPrevent){
+                                return call_method_by_object($controller,
+                                    $info ["method"], $newParams, $info ["requestParams"]
+                                );
+                            }
                         } catch (\Exception $e) {
                             if (function_exists("controller_exception_handler")) {
                                 controller_exception_handler($e);
