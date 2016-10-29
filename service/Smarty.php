@@ -14,8 +14,10 @@ namespace app\service {
         public static function addPluginsDir($dir)
         {
             $t = debug_backtrace();
-            $path = resolve_path($t[0]['file'] . "/../" . $dir);
+            $path = str_replace("\\","/",$t[0]['file']);
+            $path = resolve_path($path. "/../" . $dir);
             self::$PLUGINS_DIR[] = $path;
+            return $path;
         }
 
     }
