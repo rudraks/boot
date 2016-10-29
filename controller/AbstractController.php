@@ -176,6 +176,10 @@ namespace app\controller {
         {
             return http_response_code($code);
         }
+
+        public function getInputJson(){
+            return (array) json_decode(file_get_contents('php://input'), true);
+        }
     }
 
 }
