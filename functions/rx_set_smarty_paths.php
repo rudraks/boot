@@ -4,7 +4,7 @@ include_once(RUDRA . "/smarty/Smarty.class.php");
 
 function rx_set_smarty_paths(Smarty $viewModel)
 {
-    $viewModel->setTemplateDir(VIEW_PATH);
+    $viewModel->setTemplateDir(app\service\Smarty::$VIEW_PATH);
     $viewModel->setConfigDir(CONFIG_PATH);
     $CACHE_PATH = BUILD_PATH . 'smarty_cache';
     if (!file_exists($CACHE_PATH)) {
