@@ -12,6 +12,9 @@ namespace app\service {
             $config = \Config::getSection("REDBEAN_CONFIG");
             if (!self::$RX_CONNECTED) {
                 self::setup('mysql:host=' . $config['host'] . ';dbname=' . $config['dbname'], $config['username'], $config['password']);
+                R::ext('xdispense', function($type){
+                    return R::getRedBean()->dispense($type);
+                });
                 self::$RX_CONNECTED = true;
             }
         }
