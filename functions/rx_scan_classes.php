@@ -36,14 +36,13 @@ function rx_scan_dir($annotations, $dir)
     foreach ($iterator as $filename => $file) {
         if ($file->isFile()) {
             if (fnmatch("*/handler/*.php", $file->getPathname()) || fnmatch("*\\\handler\\\*.php", $file->getPathname())) {
-                require_once $file->getPathname();
-                $className = str_replace(".php", "", $file->getFilename());
+               require_once $file->getPathname();
+                $className = "app\\handler\\" . str_replace(".php", "", $file->getFilename());
 
                 $scan = true;
                 if (ClassUtil::getMTime($className) >= $file->getMTime()) {
                     $scan = false;
                 }
-
                 if ($scan && class_exists($className)) {
                     $result = $annotations->getClassAnnotations($className);
                     if (isset($result["Handler"]) && isset($result["Handler"][0]) && !empty($result["Handler"][0])) {
