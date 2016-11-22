@@ -145,10 +145,17 @@ namespace app\controller {
                                     "_before_controller_", $newParams, $info ["requestParams"]
                                 );
                             }
+                            $returned = null;
                             if($dontPrevent){
-                                return call_method_by_object($controller,
+                                $returned =  call_method_by_object($controller,
                                     $info ["method"], $newParams, $info ["requestParams"]
                                 );
+                                if(method_exists($controller,"_post_controller_")){
+                                    $returned = call_method_by_object($controller,
+                                        "_post_controller_", $newParams, $info ["requestParams"]
+                                    );
+                                }
+                                return $returned;
                             }
                         } catch (\Exception $e) {
                             if (function_exists("controller_exception_handler")) {
