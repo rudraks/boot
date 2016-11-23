@@ -47,8 +47,6 @@ class Email
         if (is_null($this->reply_to_email)) {
             $this->reply_to_email = $this->from_email;
         }
-        echo $this->message;
-        exit();
         $headers = 'From: ' . $this->from_email . '' . "\r\n" .
             'Reply-To: ' . $this->reply_to_email . '' . "\r\n" .
             'X-Mailer: PHP/' . phpversion();
