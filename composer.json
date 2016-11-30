@@ -20,7 +20,7 @@
     }
   },
   "require": {
-    "rudrax/utils": "0.0.10",
+    "rudrax/utils": "0.0.11",
     "rudrax/annotations": "1.*",
     "rudrax/smarty": "3.*",
     "rudrax/phpfastcache": "2.*"
