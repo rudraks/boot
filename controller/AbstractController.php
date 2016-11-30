@@ -34,7 +34,7 @@ namespace app\controller {
         {
             $nocache = (isset($_REQUEST["_AUTH_"]) || isset($_REQUEST["_NOCACHE_"]));
             $cache = $info ["cache"] && !($nocache);
-            $cache_file = ($info ["cache"] === "file") || false;
+            $cache_file = ($info ["cache"] === "file") && !empty(Webapp::$REQUEST_FILE_EXT);
             $perform = true;
             $md5key = null;
 
