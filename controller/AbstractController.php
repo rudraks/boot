@@ -4,6 +4,8 @@ namespace app\controller {
 
     use \app\model\RxCache;
     use \app\model\AbstractUser;
+    use \RudraX\Utils\Webapp;
+    use \RudraX\Utils\FileUtil;
 
     abstract class AbstractController
     {
@@ -32,6 +34,7 @@ namespace app\controller {
         {
             $nocache = (isset($_REQUEST["_AUTH_"]) || isset($_REQUEST["_NOCACHE_"]));
             $cache = $info ["cache"] && !($nocache);
+            $cache_file = ($info ["cache"] === "file") || false;
             $perform = true;
             $md5key = null;
 
@@ -49,13 +52,13 @@ namespace app\controller {
                     exit();
                 }
             }
-
+ 
             $cache = ($cache || (isset($info ["guestcache"]) && $info ["guestcache"] && !$validate)) && !$nocache;
 
             header("Pragma:");
             header("X-Rudrax-Authd: false");
 
-            if ($cache) {
+            if ($cache && !$cache_file) {
                 header("X-Rudrax-Enabled: true");
                 $this->responseCache = new RxCache ('responseCache');
                 $this->headerCache = new RxCache ('headerCache');
@@ -98,15 +101,18 @@ namespace app\controller {
                 }
             }
 
-
             if ($perform) {
                 $this->_interceptor_($info, $params);
             }
 
             if ($perform && $cache) {
                 $response = ob_get_contents();
-                $this->responseCache->set($md5key, $response);
-                $this->headerCache->set($md5key, implode(self::$HEADER_GLUE, headers_list()));
+                if($cache_file === true){
+                    FileUtil::build_write("/cache_file/".Webapp::$REQUEST_PATHNAME,$response);
+                } else {
+                    $this->responseCache->set($md5key, $response);
+                    $this->headerCache->set($md5key, implode(self::$HEADER_GLUE, headers_list()));
+                }
                 // ob_end_flush();
                 // echo $response;
             }
