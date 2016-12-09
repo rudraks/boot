@@ -27,7 +27,7 @@ namespace app\service {
         }
     }
 
-    R::rx_setup();
+    Smarty::rx_setup();
 }
 
 
