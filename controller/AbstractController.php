@@ -42,6 +42,7 @@ namespace app\controller {
 
             if ($info["auth"] && !$validate) {
                 $this->user->basicAuth();
+                $validate = $this->user->validate(); //Validate again 
             }
 
             if ($info["roles"] !== FALSE) {
