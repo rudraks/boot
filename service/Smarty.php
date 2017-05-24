@@ -2,6 +2,8 @@
 
 namespace app\service {
 
+    include_once(RUDRA . "/smarty/Smarty.class.php");
+
     class Smarty
     {
 
@@ -10,6 +12,17 @@ namespace app\service {
 
         public static function rx_setup()
         {
+            self::addPluginsDir("../plugins");
+        }
+
+        public static function getInstance($newInstance = null)
+        {
+            static $instance = null;
+            if(isset($newInstance))
+                $instance = $newInstance;
+            if ( $instance == null )
+                $instance = new \Smarty();
+            return $instance;
         }
 
         public static function addPluginsDir($dir)

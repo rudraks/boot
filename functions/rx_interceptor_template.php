@@ -4,7 +4,7 @@ include_once(RUDRA . "/smarty/Smarty.class.php");
 function rx_interceptor_template($user, $controllerInfo, $params, $controllerExecute)
 {
 
-    $tpl = new Smarty ();
+    $tpl = \app\service\Smarty::getInstance();
 
     $params["model"] = $tpl;
 

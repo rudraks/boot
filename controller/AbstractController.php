@@ -13,6 +13,7 @@ namespace app\controller {
         public $user;
         private $responseCache;
         private $cacheDuration = 30000;
+        public $output = null;
 
         public function loadSession()
         {
@@ -151,17 +152,17 @@ namespace app\controller {
                                     "_before_controller_", $newParams, $info ["requestParams"]
                                 );
                             }
-                            $returned = null;
+                            $controller->output = null;
                             if($dontPrevent){
-                                $returned =  call_method_by_object($controller,
+                                $controller->output =  call_method_by_object($controller,
                                     $info ["method"], $newParams, $info ["requestParams"]
                                 );
                                 if(method_exists($controller,"_post_controller_")){
-                                    $returned = call_method_by_object($controller,
+                                    $controller->output = call_method_by_object($controller,
                                         "_post_controller_", $newParams, $info ["requestParams"]
                                     );
                                 }
-                                return $returned;
+                                return $controller->output;
                             }
                         } catch (\Exception $e) {
                             if (function_exists("controller_exception_handler")) {
