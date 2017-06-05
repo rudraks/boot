@@ -32,6 +32,7 @@ class RudraX
 
     public static $url_callback = null;
     public static $url_size = 0;
+    public static $wild_card_count = 0;
     public static $url_varmap = null;
     public static $url_cache = null;
     public static $url_controller_info = null;
@@ -39,25 +40,36 @@ class RudraX
     public static function getMapObject($mapping)
     {
         $mapObj = self::$url_cache->get($mapping);
-
         if ($mapObj == null || RX_MODE_DEBUG) {
-            $mapper = preg_replace('/\{(.*?)\}/m', '(?P<$1>[\-\=\w\.]*)', str_replace('/', '#', $mapping));
+            $mapping2 = str_replace('[', '(', str_replace(']', ')', $mapping));
+            $mapper = preg_replace('/\{(.*?)\}/m', '(?P<$1>[\-\=\w\.]*)', str_replace('/', '#', $mapping2));
             $mapperKey = preg_replace('/\{(.*?)\}/m', '*', $mapping) . "*";
             $mapperArray = explode("#", $mapper);
             $mapperSize = (empty ($mapping) ? 0 : count($mapperArray)) + 1;
+            $wildCards = substr_count ($mapperKey,"*");
             $mapObj = array(
                 "mapper" => $mapper,
                 "mapperArray" => $mapperArray,
                 "mapperSize" => $mapperSize,
-                "mapperKey" => $mapperKey
+                "mapperKey" => $mapperKey,
+                "wildCards" => $wildCards
             );
             self::$url_cache->set($mapping, $mapObj);
         }
-        if (self::$url_size < $mapObj ["mapperSize"] && fnmatch($mapObj ["mapperKey"], Q)) {
+         
+         $sizeMatch = (self::$url_size < $mapObj ["mapperSize"]) 
+            || (
+                (self::$url_size = $mapObj ["mapperSize"]) && 
+                (self::$wild_card_count < $mapObj ["wildCards"])
+            );
+
+        if ($sizeMatch && fnmatch($mapObj ["mapperKey"],Q)) {
             $varmap = array();
+            //echo "[".$mapObj ["mapperKey"]."===".$mapObj ["mapper"]."]\n";
             preg_match("/" . $mapObj ["mapper"] . "/", str_replace("/", "#", Q), $varmap);
             if (count($varmap) > 0) {
                 self::$url_size = $mapObj ["mapperSize"];
+                self::$wild_card_count = $mapObj ["wildCards"];
                 self::$url_varmap = $varmap;
                 return $mapObj;
             }
