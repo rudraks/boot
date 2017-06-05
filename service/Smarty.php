@@ -18,9 +18,9 @@ namespace app\service {
         public static function getInstance($newInstance = null)
         {
             static $instance = null;
-            if(isset($newInstance))
+            if (isset($newInstance))
                 $instance = $newInstance;
-            if ( $instance == null )
+            if ($instance == null)
                 $instance = new \Smarty();
             return $instance;
         }
@@ -36,7 +36,11 @@ namespace app\service {
 
         public static function setTemplateDir($dir)
         {
-            self::$VIEW_PATH = $dir;
+            $t = debug_backtrace();
+            $path = str_replace("\\", "/", $t[0]['file']);
+            $path = resolve_path($path . "/../" . $dir);
+            self::$VIEW_PATH = $path;
+            return $path;
         }
     }
 
