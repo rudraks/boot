@@ -133,6 +133,13 @@ function removecookie($key, $context = "/") {
 	}
 }
 
+
+function str_starts_with($haystack, $needle)
+{
+     $length = strlen($needle);
+     return (substr($haystack, 0, $length) === $needle);
+}
+
 if (!function_exists('http_response_code')) {
     function http_response_code($code = NULL) {
 

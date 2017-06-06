@@ -154,9 +154,17 @@ namespace app\controller {
                                 );
                             }
                             $controller->output = null;
+                            $methodName = $info ["method"];
+                            if(str_starts_with($info ["method"],"_alias_")){
+                                $_methodName = str_replace("_alias_","",$info ["method"]);
+                                if( method_exists ($controller , $_methodName )){
+                                   $methodName = $_methodName;
+                                }
+                            }
+
                             if($dontPrevent){
                                 $controller->output =  call_method_by_object($controller,
-                                    $info ["method"], $newParams, $info ["requestParams"]
+                                    $methodName, $newParams, $info ["requestParams"]
                                 );
                                 if(method_exists($controller,"_post_controller_")){
                                     $controller->output = call_method_by_object($controller,
