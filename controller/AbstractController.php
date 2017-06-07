@@ -46,6 +46,10 @@ namespace app\controller {
                 $validate = $this->user->validate(); //Validate again 
             }
 
+            if($info["auth"]){
+                $nocache = TRUE;
+            }
+
             if ($info["roles"] !== FALSE) {
                 if (!in_array($this->user->role, $info["roles"])) {
                     print_r($info["roles"]);
@@ -101,6 +105,11 @@ namespace app\controller {
                     }
                     // ob_start('ob_gzhandler');
                 }
+            } else if($nocache){
+                header('Expires: Sun, 01 Jan 2000 00:00:00 GMT');
+                header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+                header("Cache-Control: post-check=0, pre-check=0", false);
+                header("Pragma: no-cache");
             }
 
             if ($perform) {
