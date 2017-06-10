@@ -52,11 +52,15 @@ class RudraX
                 "mapperArray" => $mapperArray,
                 "mapperSize" => $mapperSize,
                 "mapperKey" => $mapperKey,
-                "wildCards" => $wildCards
+                "wildCards" => empty($wildCards) ? 0 : $wildCardss
             );
             self::$url_cache->set($mapping, $mapObj);
         }
          
+        if(!isset($mapObj["wildCards"])){
+             $mapObj ["wildCards"] = 0;
+         }
+
          $sizeMatch = (self::$url_size < $mapObj ["mapperSize"]) 
             || (
                 (self::$url_size = $mapObj ["mapperSize"]) && 
