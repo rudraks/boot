@@ -52,7 +52,7 @@ class RudraX
                 "mapperArray" => $mapperArray,
                 "mapperSize" => $mapperSize,
                 "mapperKey" => $mapperKey,
-                "wildCards" => empty($wildCards) ? 0 : $wildCardss
+                "wildCards" => empty($wildCards) ? 0 : $wildCards
             );
             self::$url_cache->set($mapping, $mapObj);
         }
