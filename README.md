@@ -1,13 +1,25 @@
 # boot
 Simple and Light weight MVC framework in PHP, it serves all stable functionalties like routing (native), caching (phpFastCache), database (Redbeans & PDO), templating (Smarty), authentication (Basic,SSO & Custom), Session/Roles etc.
 
+## Setup
 
-##install
+### Setup New RudraX Project
+If you are starting a fresh project simply follow these steps
+- Setup Server first : [instructions](/boilerplatez/docs/master/markdown/xampp/ENV.md);
+- Setup PHP first : [instructions](/boilerplatez/docs/master/markdown/php/ENV.md);
+- Go to directoy where you want to create your project lests say "/Users/Lucas/Projects/" and run this command
+```bash
+$ composer create-project rudrax/project my_project
 ```
-  composer install rudrax/boot --save
+Or you can Manually Setup RudraX project or install RudraX in your existing project
+
+### Install in existing project
+```
+$ composer install rudrax/boot --save
 ```
 
-## Folder Structure
+### Folder Structure
+If you have used create-project command then this directory structure will be automatically created for you. Otherwise create it manually. and make sure build folder has correct permisson 0777
 ```
 -app
   L controller  // Controller/URL Mapping for Project, name of file and class should match
@@ -19,10 +31,13 @@ Simple and Light weight MVC framework in PHP, it serves all stable functionaltie
 -src            // Folder for static files like javascript,html,css 
 -lib            // composer library folder
 -index.php
+.htaccess
 -composer.json  // set config->vendor-dir = lib
 
 ```
-## index File [index.php]
+### index File [index.php]
+This file also gets created automatically if you have used create-project. Otherwise create it and copy the code in file, 
+also copy [.htaccess](.rudraks/boot/master/root.htaccess) in you project.
 ```
 ini_set('display_errors', 'On');
 ini_set('error_reporting', E_ALL);
@@ -40,7 +55,8 @@ RudraX::invoke(array(
 ));
 ```
 
-
+## Documentaion
+Now we are done with setup, lets start with how to write code in our project.
 
 ## Sample Controller [app/controller/MyController.php]
 ```php
