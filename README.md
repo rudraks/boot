@@ -3,10 +3,12 @@ Simple and Light weight MVC framework in PHP, it serves all stable functionaltie
 
 ## Setup
 
+### Prerequisites
+- XAMP : [instructions](/boilerplatez/docs/master/markdown/xampp/ENV.md);
+- PHP/Copmoser : [instructions](/boilerplatez/docs/master/markdown/php/ENV.md);
+
 ### Setup New RudraX Project
 If you are starting a fresh project simply follow these steps
-- Setup Server first : [instructions](/boilerplatez/docs/master/markdown/xampp/ENV.md);
-- Setup PHP first : [instructions](/boilerplatez/docs/master/markdown/php/ENV.md);
 - Go to directoy where you want to create your project lests say "/Users/Lucas/Projects/" and run this command
 ```bash
 $ composer create-project rudrax/project my_project
