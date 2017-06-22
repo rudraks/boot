@@ -4,7 +4,7 @@ Simple and Light weight MVC framework in PHP, it serves all stable functionaltie
 ## Setup
 
 ### Prerequisites
-- XAMP : [instructions](https://github.com/boilerplatez/docs/master/markdown/xampp/ENV.md)
+- XAMP : [instructions](https://github.com/boilerplatez/docs/blob/master/markdown/xampp/ENV.md)
 - PHP/Copmoser : [instructions](https://github.com/boilerplatez/docs/blob/master/markdown/php/ENV.md)
 
 ### Setup New RudraX Project
