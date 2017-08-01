@@ -46,7 +46,7 @@ namespace app\controller {
                 $validate = $this->user->validate(); //Validate again 
             }
 
-            if($info["auth"]){
+            if ($info["auth"]) {
                 $nocache = TRUE;
             }
 
@@ -58,7 +58,7 @@ namespace app\controller {
                     exit();
                 }
             }
- 
+
             $cache = ($cache || (isset($info ["guestcache"]) && $info ["guestcache"] && !$validate)) && !$nocache;
 
             header("Pragma:");
@@ -105,7 +105,7 @@ namespace app\controller {
                     }
                     // ob_start('ob_gzhandler');
                 }
-            } else if($nocache){
+            } else if ($nocache) {
                 header('Expires: Sun, 01 Jan 2000 00:00:00 GMT');
                 header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
                 header("Cache-Control: post-check=0, pre-check=0", false);
@@ -118,8 +118,8 @@ namespace app\controller {
 
             if ($perform && $cache) {
                 $response = ob_get_contents();
-                if($cache_file === true){
-                    FileUtil::build_write("/cache_file/".Webapp::$REQUEST_PATHNAME,$response);
+                if ($cache_file === true) {
+                    FileUtil::build_write("/cache_file/" . Webapp::$REQUEST_PATHNAME, $response);
                 } else {
                     $this->responseCache->set($md5key, $response);
                     $this->headerCache->set($md5key, implode(self::$HEADER_GLUE, headers_list()));
@@ -155,46 +155,50 @@ namespace app\controller {
                 return call_user_func(
                     rx_function("rx_interceptor_" . $info ["type"]),
                     $this->user, $info, $params, function ($newParams) use ($controller, $info, $params) {
-                        try {
-                            $dontPrevent = true;
-                            if(method_exists($controller,"_before_controller_")){
-                                $dontPrevent = !!call_method_by_object($controller,
-                                    "_before_controller_", $newParams, $info ["requestParams"]
-                                );
+                    try {
+                        $dontPrevent = true;
+                        if (method_exists($controller, "_before_controller_")) {
+                            $dontPrevent = !!call_method_by_object($controller,
+                                "_before_controller_", $newParams, $info ["requestParams"]
+                            );
+                        }
+                        $controller->output = null;
+                        $methodName = $info ["method"];
+                        if (str_starts_with($info ["method"], "_alias_")) {
+                            $_methodName = str_replace("_alias_", "", $info ["method"]);
+                            if (method_exists($controller, $_methodName)) {
+                                $methodName = $_methodName;
                             }
-                            $controller->output = null;
-                            $methodName = $info ["method"];
-                            if(str_starts_with($info ["method"],"_alias_")){
-                                $_methodName = str_replace("_alias_","",$info ["method"]);
-                                if( method_exists ($controller , $_methodName )){
-                                   $methodName = $_methodName;
-                                }
-                            }
-
-                            if($dontPrevent){
-                                $controller->output =  call_method_by_object($controller,
-                                    $methodName, $newParams, $info ["requestParams"]
-                                );
-                                if(method_exists($controller,"_post_controller_")){
-                                    $controller->output = call_method_by_object($controller,
-                                        "_post_controller_", $newParams, $info ["requestParams"]
-                                    );
-                                }
-                                return $controller->output;
-                            }
-                        } catch (\Exception $e) {
-                            if (function_exists("controller_exception_handler")) {
-                                controller_exception_handler($e);
-                            } else {
-                                print_line("<div style='display:none'>**============**");
-                                print_line("Controller Exception:" . $e->getMessage());
-                                print_line("**--------------**");
-                                print_line($e->getTraceAsString());
-                                print_line("**============**</div>");
+                        } else if (isset($info ["alias"]) && !empty($info ["alias"])) {
+                            if (method_exists($controller, $info ["alias"])) {
+                                $methodName = $info ["alias"];
                             }
                         }
-                        return "empty";
-                    });
+
+                        if ($dontPrevent) {
+                            $controller->output = call_method_by_object($controller,
+                                $methodName, $newParams, $info ["requestParams"]
+                            );
+                            if (method_exists($controller, "_post_controller_")) {
+                                $controller->output = call_method_by_object($controller,
+                                    "_post_controller_", $newParams, $info ["requestParams"]
+                                );
+                            }
+                            return $controller->output;
+                        }
+                    } catch (\Exception $e) {
+                        if (function_exists("controller_exception_handler")) {
+                            controller_exception_handler($e);
+                        } else {
+                            print_line("<div style='display:none'>**============**");
+                            print_line("Controller Exception:" . $e->getMessage());
+                            print_line("**--------------**");
+                            print_line($e->getTraceAsString());
+                            print_line("**============**</div>");
+                        }
+                    }
+                    return "empty";
+                });
 
             }
         }
@@ -209,8 +213,9 @@ namespace app\controller {
             return http_response_code($code);
         }
 
-        public function getInputJson(){
-            return (array) json_decode(file_get_contents('php://input'), true);
+        public function getInputJson()
+        {
+            return (array)json_decode(file_get_contents('php://input'), true);
         }
     }
 

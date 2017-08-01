@@ -36,7 +36,7 @@ function rx_scan_dir($annotations, $dir)
     foreach ($iterator as $filename => $file) {
         if ($file->isFile()) {
             if (fnmatch("*/handler/*.php", $file->getPathname()) || fnmatch("*\\\handler\\\*.php", $file->getPathname())) {
-               require_once $file->getPathname();
+                require_once $file->getPathname();
                 $className = "app\\handler\\" . str_replace(".php", "", $file->getFilename());
 
                 $scan = true;
@@ -80,6 +80,7 @@ function rx_scan_dir($annotations, $dir)
                                 "mtime" => $file->getMTime(),
                                 "mappingUrl" => $result["RequestMapping"][0]["url"],
                                 "requestParams" => isset($result["RequestParams"]),
+                                "alias" => isset($result["Alias"]) ? $result["Alias"][0] : FALSE,
                                 "roles" => isset($result["Role"]) ? $result["Role"] : FALSE,
                                 "auth" => (isset($result["RequestMapping"][0]["auth"]) ? $result["RequestMapping"][0]["auth"] : FALSE),
                                 "cache" => (isset($result["RequestMapping"][0]["cache"]) ? $result["RequestMapping"][0]["cache"] : FALSE),
