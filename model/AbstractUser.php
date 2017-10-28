@@ -121,7 +121,7 @@ namespace app\model {
                 header("HTTP/1.0 401 Unauthorized");
                 exit();
             }
-            header('X-auth-event : true');
+            header('X-auth-event: true');
             $this->uname = $_SERVER['PHP_AUTH_USER'];
             $this->password = $_SERVER['PHP_AUTH_PW'];
             // OK, the user is authenticated
