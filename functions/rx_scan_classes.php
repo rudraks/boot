@@ -67,9 +67,6 @@ function rx_scan_dir($annotations, $dir)
 
                 if ($scan && class_exists($className)) {
                     $methods = get_this_class_methods($className);
-                    if($className == 'app\\controller\\UsersController'){
-                        print_r($methods);
-                    }
                     foreach ($methods as $method) {
                         $result = $annotations->getMethodAnnotations($className, $method);
                         if (isset($result["RequestMapping"])
