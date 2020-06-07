@@ -84,7 +84,7 @@ namespace app\model {
             $this->info['uname'] = $this->uname;
 
             $encryptedpassword = md5($this->password);
-            $rx_salt = md5($this->uname + $encryptedpassword);
+            $rx_salt = md5($this->uname ."". $encryptedpassword);
 
             if (isset($_POST['cookiecheck'])) {
                 setcookie("rx_useruid", $this->uid, time() + 60 * 60 * 24 * 30, "/");
