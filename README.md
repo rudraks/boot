@@ -132,7 +132,7 @@ All are method level annotations
 
 
 ## Model Annotation Options
-    Class Level Annotations
+Class Level Annotations
 - **@Model** - [sessionUser] - 
     - *sessionUser* - if used then that model will be used as default Session user, Class must extend app\model\AbstractUser
 
