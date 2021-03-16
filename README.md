@@ -119,7 +119,7 @@ namespace app\controller {
 ```
 
 ## Controller Annotation Options
-    All are method level annotations
+All are method level annotations
 - **@RequestMapping** - URL info
       - *url* - url pattern to match
       - *method* - request method [GET|POST|PUT|DELETE] - used only if mentioned
